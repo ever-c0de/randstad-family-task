@@ -5,8 +5,10 @@ namespace Drupal\randstad_annual\Form;
 use Drupal\Component\Utility\EmailValidatorInterface;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -36,17 +38,37 @@ class RandstadAnnualRegisterForm extends FormBase {
   protected $emailValidator;
 
   /**
+   * The current route match.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatch;
+
+  /**
+   * The entity query.
+   *
+   * @var \Drupal\Core\Entity\Query\QueryInterface
+   */
+  protected $entityQuery;
+
+  /**
    * Constructs a new RandstadAnnualRegisterForm object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    * @param \Drupal\Component\Utility\EmailValidatorInterface $email_validator
    *    The email validator service.
+   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+   *    The current route match.
+   * @param \Drupal\Core\Entity\Query\QueryInterface $entity_query
+   *    The entity query.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, EmailValidatorInterface $email_validator) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EmailValidatorInterface $email_validator, RouteMatchInterface $route_match, QueryInterface $entity_query) {
     $this->entityTypeManager = $entity_type_manager;
     $this->nodeStorage = $entity_type_manager->getStorage('node');
     $this->emailValidator = $email_validator;
+    $this->routeMatch = $route_match;
+    $this->entityQuery = $entity_query;
   }
 
   /**
@@ -55,8 +77,10 @@ class RandstadAnnualRegisterForm extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager'),
-      $container->get('email.validator')
-    );
+      $container->get('email.validator'),
+      $container->get('current_route_match'),
+      $container->get('entity_type.manager')->getStorage('taxonomy_term')->getQuery()
+      );
   }
 
   /**
@@ -70,6 +94,13 @@ class RandstadAnnualRegisterForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    // If we don't have a department – show an error.
+    if (!$this->checkDepartment()) {
+      $this->messenger()
+        ->addError($this->t("Sorry, this department is not allowed. Try another. ( f.e. finance, it, consulting )"));
+      return [];
+    }
+
     // Registration form fields.
     $form['field_employee_name'] = [
       '#type' => 'textfield',
@@ -175,6 +206,7 @@ class RandstadAnnualRegisterForm extends FormBase {
         'field_kids_amount' => $values['field_kids_amount'],
         'field_vegetarians_amount' => $values['field_vegetarians_amount'],
         'field_email_address' => $values['field_email_address'],
+        'field_department' => $this->checkDepartment(),
       ])->save();
       $this->messenger()
         ->addStatus($this->t("Registered for event successfully!"));
@@ -183,6 +215,32 @@ class RandstadAnnualRegisterForm extends FormBase {
       $this->messenger()
         ->addError($this->t("Sorry, seems that 'Registration' content type is not created!"));
     }
+  }
+
+  /**
+   * Helper method to check if valid department in URL.
+   */
+  public function checkDepartment() {
+    // Get department from the URL.
+    $department = $this->routeMatch->getParameter('department');
+
+    // Get terms of department vocabulary.
+    $query = $this->entityQuery
+      ->condition('vid', "randstad_annual_departments");
+    $tids = $query->execute();
+
+    // Find if this department is allowed.
+    $terms = $this->entityTypeManager
+      ->getStorage('taxonomy_term')
+      ->loadMultiple($tids);
+
+    //
+    foreach ($terms as $term) {
+      if ($department === strtolower($term->getName())) {
+        return $term;
+      }
+    }
+    return FALSE;
   }
 
 }
