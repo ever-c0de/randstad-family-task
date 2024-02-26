@@ -1,0 +1,5 @@
+name: Randstad Annual Family Event
+type: module
+description: 'Handles and manages event registrations for the annual company-wide Randstad Digital family event.'
+package: Custom
+core_version_requirement: ^9
