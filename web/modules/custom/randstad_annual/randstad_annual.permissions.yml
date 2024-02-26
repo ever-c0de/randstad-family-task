@@ -1,0 +1,4 @@
+manage event registrations:
+  title: 'Manage Randstad Annual event registrations'
+  description: 'You can manage registrations with this permission.'
+  restrict access: true
