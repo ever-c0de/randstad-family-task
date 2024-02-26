@@ -4,4 +4,20 @@ randstad_annual.register_form:
     _form: '\Drupal\randstad_annual\Form\RandstadAnnualRegisterForm'
     _title: 'Annual company wide Randstad Digital family event'
   requirements:
-    _permission: 'administer blocks'
+    _permission: 'access content'
+
+entity.randstad_annual_department.collection:
+  path: '/admin/config/departments'
+  defaults:
+    _title: 'Department Collection'
+    _entity_list: 'randstad_annual_department'
+  requirements:
+    _permission: 'manage event registrations'
+
+randstad_annual.randstad_annual_department.add:
+  path: '/admin/config/add-department'
+  defaults:
+    _title: 'Add new Department'
+    _entity_form: 'randstad_annual_department.add'
+  requirements:
+    _permission: 'manage event registrations'

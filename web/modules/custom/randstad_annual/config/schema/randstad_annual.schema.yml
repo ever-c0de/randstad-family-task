@@ -1,0 +1,21 @@
+randstad_annual.department:
+  type: config_entity
+  label: 'Department'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+
+randstad_annual.department.*:
+  type: mapping
+  label: 'Department'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
