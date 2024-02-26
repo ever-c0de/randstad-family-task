@@ -1,0 +1,8 @@
+randstad_annual.register_form:
+  path: '/registration'
+  defaults:
+    _form: '\Drupal\randstad_annual\Form\RandstadAnnualRegisterForm'
+    _title: 'Annual company wide Randstad Digital family event'
+  requirements:
+    _permission: 'administer blocks'
+
