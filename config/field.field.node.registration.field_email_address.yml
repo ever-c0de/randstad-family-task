@@ -1,0 +1,19 @@
+uuid: fab9f7c1-2846-4aa8-859c-4e4d75148f73
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_email_address
+    - node.type.registration
+id: node.registration.field_email_address
+field_name: field_email_address
+entity_type: node
+bundle: registration
+label: 'Email address'
+description: 'Email address of employee.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

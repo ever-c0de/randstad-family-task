@@ -1,0 +1,17 @@
+uuid: ced021f0-41e8-4739-8e4f-ea4a7baa50d3
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Registration
+type: registration
+description: 'CT for annual company wide Randstad Digital family event.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true
