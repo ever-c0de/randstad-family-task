@@ -1,0 +1,6 @@
+id: new_functionality_department
+label: 'New functionality Department'
+uuid: 3a953fd6-8205-4bde-91c7-7126ea353a75
+langcode: en
+status: true
+dependencies: {  }
