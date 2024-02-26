@@ -57,11 +57,11 @@ class RandstadAnnualRegisterForm extends FormBase {
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    * @param \Drupal\Component\Utility\EmailValidatorInterface $email_validator
-   *    The email validator service.
+   *   The email validator service.
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
-   *    The current route match.
+   *   The current route match.
    * @param \Drupal\Core\Entity\Query\QueryInterface $entity_query
-   *    The entity query.
+   *   The entity query.
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, EmailValidatorInterface $email_validator, RouteMatchInterface $route_match, QueryInterface $entity_query) {
     $this->entityTypeManager = $entity_type_manager;
@@ -179,13 +179,14 @@ class RandstadAnnualRegisterForm extends FormBase {
       $form_state->setErrorByName('field_email_address', $this->t('%email is an invalid email address.', ['%email' => $values['field_email_address']]));
     }
 
-    // Checks if employee is not registered yet. Should execute last for resource optimization.
+    // Checks if employee is not registered yet.
+    // Should execute as late as possible for resource optimization.
     if ($this->nodeStorage->loadByProperties([
       'type' => 'registration',
       'field_email_address' => $values['field_email_address'],
     ])) {
       $form_state->setErrorByName('field_email_address', $this->t("Sorry, the email address - %address already registered for annual event.", [
-        '%address' => $values['employee_email'],
+        '%address' => $values['field_email_address'],
       ]));
     }
   }
@@ -234,7 +235,6 @@ class RandstadAnnualRegisterForm extends FormBase {
       ->getStorage('taxonomy_term')
       ->loadMultiple($tids);
 
-    //
     foreach ($terms as $term) {
       if ($department === strtolower($term->getName())) {
         return $term;

@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Install file for the randstad_annual.
+ */
+
+/**
+ * Install hook. We should preinstall a list of default departments.
+ *
+ * @throws \Exception
+ *   Exception when creating departments.
+ */
+function randstad_annual_install() {
+  // Create default departments on module install.
+  $vid = 'randstad_annual_departments';
+  $departments = ['Finance', 'IT', 'Consulting', 'Teaching'];
+
+  foreach ($departments as $department) {
+    \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
+      'name' => $department,
+      'vid' => $vid,
+    ])->save();
+  }
+}

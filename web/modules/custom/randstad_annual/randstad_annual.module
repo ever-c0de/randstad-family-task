@@ -1,25 +1,22 @@
 <?php
 
-    /**
-    * @file
-    * Install file for the randstad_annual.
-    */
+use Drupal\Core\Cache\Cache;
+use Drupal\node\Entity\Node;
 
-    /**
-    * Install hook. We should preinstall a list of default departments.
-    *
-    * @throws \Exception
-    *   Exception when creating departments.
-    */
-    function randstad_annual_install() {
-    // Create default departments on module install.
-    $vid = 'randstad_annual_departments';
-    $departments = ['Finance', 'IT', 'Consulting', 'Teaching'];
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function randstad_annual_node_presave(Node $node) {
+  // Allows for clearing of blocks based on a node type.
+  $tags = ['node_type:' . $node->getType()];
+  Cache::invalidateTags($tags);
+}
 
-    foreach ($departments as $department) {
-    \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create([
-    'name' => $department,
-    'vid' => $vid,
-    ])->save();
-    }
-  }
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function randstad_annual_node_delete(Node $node) {
+  // Allows for clearing of blocks based on a node type.
+  $tags = ['node_type:' . $node->getType()];
+  Cache::invalidateTags($tags);
+}
