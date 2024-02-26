@@ -1,8 +1,0 @@
-uuid: 511bcc70-5987-4a4d-b8ef-9ff4cba6b055
-langcode: en
-status: true
-dependencies: {  }
-name: Departments
-vid: departments
-description: 'Departments vocabulary managed for Registration CT.'
-weight: 0

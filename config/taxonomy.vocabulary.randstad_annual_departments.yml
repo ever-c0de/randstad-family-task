@@ -1,0 +1,8 @@
+uuid: d71d160d-a508-4de6-81f1-7132e08b5f65
+langcode: en
+status: true
+dependencies: {  }
+name: Departments
+vid: randstad_annual_departments
+description: 'Used to manage departments for Registration CT.'
+weight: 0

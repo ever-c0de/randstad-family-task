@@ -5,4 +5,3 @@ randstad_annual.register_form:
     _title: 'Annual company wide Randstad Digital family event'
   requirements:
     _permission: 'administer blocks'
-
