@@ -1,0 +1,29 @@
+uuid: 31b2852d-639a-464a-a81d-7b718a17f8b9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_department
+    - node.type.registration
+    - taxonomy.vocabulary.departments
+id: node.registration.field_department
+field_name: field_department
+entity_type: node
+bundle: registration
+label: Department
+description: 'Department of the employee. Comes from the URL'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      departments: departments
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

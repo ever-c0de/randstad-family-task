@@ -1,5 +1,5 @@
 randstad_annual.register_form:
-  path: '/registration'
+  path: '/registration/{department}'
   defaults:
     _form: '\Drupal\randstad_annual\Form\RandstadAnnualRegisterForm'
     _title: 'Annual company wide Randstad Digital family event'

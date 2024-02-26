@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.registration.field_department
     - field.field.node.registration.field_email_address
     - field.field.node.registration.field_employee_name
     - field.field.node.registration.field_kids_amount
@@ -23,6 +24,7 @@ content:
     weight: 100
     region: content
 hidden:
+  field_department: true
   field_email_address: true
   field_employee_name: true
   field_kids_amount: true

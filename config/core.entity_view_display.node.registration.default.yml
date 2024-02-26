@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.registration.field_department
     - field.field.node.registration.field_email_address
     - field.field.node.registration.field_employee_name
     - field.field.node.registration.field_kids_amount
@@ -16,6 +17,14 @@ targetEntityType: node
 bundle: registration
 mode: default
 content:
+  field_department:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 106
+    region: content
   field_email_address:
     type: basic_string
     label: above
