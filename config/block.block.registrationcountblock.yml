@@ -1,0 +1,20 @@
+uuid: 3178871b-cc1f-436a-93b1-62c3584b9344
+langcode: en
+status: true
+dependencies:
+  module:
+    - randstad_annual
+  theme:
+    - olivero
+id: registrationcountblock
+theme: olivero
+region: sidebar
+weight: 0
+provider: null
+plugin: randstad_registration_count_block
+settings:
+  id: randstad_registration_count_block
+  label: 'Registration Count'
+  label_display: visible
+  provider: randstad_annual
+visibility: {  }

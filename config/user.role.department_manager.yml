@@ -1,0 +1,12 @@
+uuid: cc5cc1ad-3a23-47a0-997a-8c5a5d4fc517
+langcode: en
+status: true
+dependencies:
+  module:
+    - randstad_annual
+id: department_manager
+label: 'Department Manager'
+weight: 4
+is_admin: null
+permissions:
+  - 'manage event registrations'
